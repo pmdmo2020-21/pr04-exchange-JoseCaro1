@@ -10,7 +10,6 @@ import es.iessaladillo.pedrojoya.exchange.SoftInputUtils.hideSoftKeyboard
 import es.iessaladillo.pedrojoya.exchange.databinding.MainActivityBinding
 import java.lang.Exception
 import kotlin.Throws
-import java.lang.Override as Override1
 
 class MainActivity : AppCompatActivity() {
 
@@ -77,9 +76,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.txtAmount.addTextChangedListener(txtAmountWatcher)
+        binding.txtAmount.setOnEditorActionListener(TextView.OnEditorActionListener{_,_,_ -> conversionOnClick()})
     }
 
-    private fun conversionOnClick() {
+    private fun conversionOnClick():Boolean {
         hideSoftKeyboard(binding.root)
         Toast.makeText(
             this,
@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             ),
             Toast.LENGTH_SHORT
         ).show()
+        return true
     }
 
     private fun conversionAmount(): Double {

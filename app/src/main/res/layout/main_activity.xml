@@ -13,7 +13,8 @@
         android:id="@+id/lblAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/amount" />
+        android:text="@string/amount"
+        android:layout_marginTop="@dimen/padding"/>
 
     <EditText
         android:id="@+id/txtAmount"
@@ -23,13 +24,15 @@
         android:inputType="numberDecimal"
         android:text="@string/initial"
         android:gravity="end"
-        android:imeOptions="actionDone"/>
+        android:imeOptions="actionDone"
+        style="@style/TextAppearance.AppCompat.Title"/>
 
     <TextView
         android:id="@+id/lblCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="From currency" />
+        android:text="From currency"
+        android:paddingTop="@dimen/padding"/>
 
     <RadioGroup
         android:id="@+id/rdgActualCurrency"
@@ -69,20 +72,23 @@
         android:id="@+id/lblCurrency2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To currency" />
+        android:text="To currency"
+        android:paddingTop="@dimen/main_margin"/>
 
     <RadioGroup
         android:id="@+id/rdgToCurrency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/main_margin">
 
         <RadioButton
             android:id="@+id/rdbDollar2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/dollar" />
+            android:text="@string/dollar"
+            />
 
         <RadioButton
             android:id="@+id/rdbEuro2"
@@ -95,7 +101,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pound"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <ImageView
             android:id="@+id/imageCurrency2"
@@ -111,7 +118,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginVertical="@dimen/main_margin"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:layout_marginTop="@dimen/padding"/>
 
 
 </LinearLayout>
