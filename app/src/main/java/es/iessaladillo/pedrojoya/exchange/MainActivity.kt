@@ -3,13 +3,11 @@ package es.iessaladillo.pedrojoya.exchange
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import es.iessaladillo.pedrojoya.exchange.SoftInputUtils.hideSoftKeyboard
 import es.iessaladillo.pedrojoya.exchange.databinding.MainActivityBinding
 import java.lang.Exception
-import kotlin.Throws
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,8 +50,11 @@ class MainActivity : AppCompatActivity() {
             radiobuttonToCurrentChangeChecked(rdg, selectButton, binding.imageCurrency2)
         }
         binding.btnExchange.setOnClickListener { conversionOnClick() }
+        binding.txtAmount.setOnEditorActionListener(TextView.OnEditorActionListener { _, _, _ -> conversionOnClick() })
+    }
 
-
+    override fun onResume() {
+        super.onResume()
         txtAmountWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isBlank()) {
@@ -76,10 +77,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.txtAmount.addTextChangedListener(txtAmountWatcher)
-        binding.txtAmount.setOnEditorActionListener(TextView.OnEditorActionListener{_,_,_ -> conversionOnClick()})
+
     }
 
-    private fun conversionOnClick():Boolean {
+    override fun onPause() {
+        super.onPause()
+        binding.txtAmount.removeTextChangedListener(null)
+    }
+
+    private fun conversionOnClick(): Boolean {
         hideSoftKeyboard(binding.root)
         Toast.makeText(
             this,
@@ -96,37 +102,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun conversionAmount(): Double {
         var amount: Double = binding.txtAmount.text.toString().toDouble()
-        when {
-            binding.rdbDollar.isChecked -> {
-                when {
-                    binding.rdbPound2.isChecked -> amount = Currency.POUND.fromDollar(amount)
-                    binding.rdbEuro2.isChecked -> amount = Currency.EURO.fromDollar(amount)
-                }
-            }
-            binding.rdbEuro.isChecked -> {
-                amount = Currency.POUND.toDollar(amount)
-                when {
-                    binding.rdbPound2.isChecked -> amount = Currency.EURO.fromDollar(amount)
-                }
-            }
-            binding.rdbPound.isChecked -> {
-                amount = Currency.POUND.toDollar(amount)
-                when {
-                    binding.rdbEuro2.isChecked -> amount = Currency.EURO.fromDollar(amount)
-                }
-            }
-        }
+        amount = getTagFromRadioButton.toDollar(amount)
+        amount = getTagToRadioButton.fromDollar(amount)
         return amount
     }
 
     private fun getSelectedRadioButton(rdg: RadioGroup, selectedButton: Int): RadioButton {
-        val selectedRadioButton = when (selectedButton) {
+        return when (selectedButton) {
             rdg.getChildAt(0).id -> rdg.getChildAt(0) as RadioButton
             rdg.getChildAt(1).id -> rdg.getChildAt(1) as RadioButton
             rdg.getChildAt(2).id -> rdg.getChildAt(2) as RadioButton
             else -> throw Exception("Wrong id")
         }
-        return selectedRadioButton
     }
 
     private fun radiobuttonFromCurrentChangeChecked(
